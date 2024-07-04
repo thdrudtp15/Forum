@@ -16,4 +16,4 @@ export default async function List(req: NextApiRequest, res: NextApiResponse) {
     }
 }
 
-//12
+//2024. 07.05 12:08
