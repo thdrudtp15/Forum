@@ -15,5 +15,3 @@ export default async function List(req: NextApiRequest, res: NextApiResponse) {
         return res.status(200).json(await getList());
     }
 }
-
-//1
