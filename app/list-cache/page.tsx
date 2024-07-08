@@ -21,3 +21,5 @@ export default async function List() {
         </div>
     );
 }
+
+// 말썽 그만..
