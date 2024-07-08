@@ -47,15 +47,16 @@ export default function ListItem({ result }: { result: result }) {
      * 쿼리스트링으로 삭제하는 방법
      */
     const deletePost = async (_id: string, index: number) => {
-        fetch(`/api/test?id=${_id}`, { method: 'GET' })
+        axios
+            .get(`/api/test?id=${_id}`)
             .then((res) => {
                 let list = document.querySelectorAll('.list-item');
                 if (list instanceof NodeList) {
                     list[index].classList.add('opacity0');
                 }
-                setTimeout(() => {
+                setTimeout(()=>{
                     router.refresh();
-                }, 1000);
+                },1000 )
             })
             .catch((e) => {
                 console.log(e);

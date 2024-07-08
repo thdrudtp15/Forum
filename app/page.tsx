@@ -1,4 +1,4 @@
-import { connectDB } from '../../forum/util/database';
+import { connectDB } from '@/util/database';
 
 type result = { id: string; title?: string; content: string }[];
 

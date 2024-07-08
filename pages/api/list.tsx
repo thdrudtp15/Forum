@@ -12,7 +12,8 @@ async function getList() {
 
 export default async function List(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'GET') {
-        return res.status(200).json(await getList());
+        let result = await getList();
+        return res.status(200).json(result);
     }
 }
 
