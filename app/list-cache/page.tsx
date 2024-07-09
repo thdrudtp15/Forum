@@ -12,7 +12,9 @@ export default async function List() {
     // const db = client.db('forum');
     // const result: result = await db.collection('post').find().toArray();
 
-    const apiResult: Response = await fetch('http://localhost:3000/api/list', { method: 'GET' }); // <== 캐싱 옵션 on (사실 자동으로 됨ㅋ)
+    const apiResult: Response = await fetch('http://localhost:3000/api/list', { method: 'GET', cache: 'force-cache' }); // <== 캐싱 옵션 on (사실 자동으로 됨ㅋ)
+    // const apiResult: Response = await fetch('http://localhost:3000/api/list', { method: 'GET', next : {revalidate : 20} }); // <== 20초 마다 캐싱
+    // const apiResult: Response = await fetch('http://localhost:3000/api/list', { method: 'GET', cache: 'no-store' }); // <== 캐싱 X
     const result: result = await apiResult.json(); // ...;; api 전체 경로를 적어줘야 한단다...클라이언트는 안 적어도 되나??
 
     return (
