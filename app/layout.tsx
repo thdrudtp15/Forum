@@ -20,7 +20,6 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     let 로그인정보 = await getServerSession(authOptions);
-    console.log(로그인정보?.user);
 
     return (
         <html lang="en">
