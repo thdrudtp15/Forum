@@ -5,9 +5,9 @@ export const authOptions = {
     providers: [
         GithubProvider({
             clientId: 'Ov23limZKripVt2ucS8C',
-            clientSecret: '6ebb46d6bd9400c4d36a894b709f02dced8345a6',
+            clientSecret: 'd83eab6382da070872f56684c17286c974a205df',
         }),
     ],
-    secret: 'Asdf!zxcv15@', // jwt생성시쓰는암호
+    secret: 'Asdf!zxcv15@',
 };
 export default NextAuth(authOptions);
