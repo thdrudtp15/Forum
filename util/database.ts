@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
-const url = 'mongodb+srv://admin:asdfzxcv15@cluster0.auksbnd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const url =
+    'mongodb+srv://admin:asdfzxcv15@cluster0.auksbnd.mongodb.net/forum?retryWrites=true&w=majority&appName=Cluster0';
 let connectDB: Promise<MongoClient>;
 let global: { _mongo?: Promise<MongoClient> } = {};
 

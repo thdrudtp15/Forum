@@ -13,18 +13,26 @@ export default function ListItem({ result }: { result: result }) {
     /**
      * post 요청에 body에 삭제할 내용을 담아 삭제하는 방법.
      */
-    // const deletePost = (_id: string, index: number) => {
-    //     axios
-    //         .post(`/api/post/delete`, { _id: _id })
-    //         .then((res) => {
-    //             console.log(res);
-    //             let list = document.querySelectorAll('.list-item');
-    //             if (list instanceof NodeList) {
-    //                 list[index].classList.add('opacity0');
-    //             }
-    //         })
-    //         .catch((e) => {});
-    // };
+    const deletePost = (_id: string, index: number) => {
+        axios
+            .post(`/api/post/delete`, { _id: _id })
+            .then((res) => {
+                console.log(res);
+                let list = document.querySelectorAll('.list-item');
+                if (list instanceof NodeList) {
+                    list[index].classList.add('opacity0');
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+                let error: string = e?.response?.data;
+                if (error === 'Please Login') {
+                    alert('로그인 해주세요.');
+                } else {
+                    alert('본인 작성 게시글 외에는 삭제할 수 없습니다.');
+                }
+            });
+    };
 
     /**
      * URL 파라미터로 삭제하는 방법.
@@ -46,21 +54,21 @@ export default function ListItem({ result }: { result: result }) {
     /**
      * 쿼리스트링으로 삭제하는 방법
      */
-    const deletePost = async (_id: string, index: number) => {
-        fetch(`/api/test?id=${_id}`, { method: 'GET' })
-            .then((res) => {
-                let list = document.querySelectorAll('.list-item');
-                if (list instanceof NodeList) {
-                    list[index].classList.add('opacity0');
-                }
-                setTimeout(() => {
-                    router.refresh();
-                }, 1000);
-            })
-            .catch((e) => {
-                console.log(e);
-            });
-    };
+    // const deletePost = async (_id: string, index: number) => {
+    //     fetch(`/api/test?id=${_id}`, { method: 'GET' })
+    //         .then((res) => {
+    //             let list = document.querySelectorAll('.list-item');
+    //             if (list instanceof NodeList) {
+    //                 list[index].classList.add('opacity0');
+    //             }
+    //             setTimeout(() => {
+    //                 router.refresh();
+    //             }, 1000);
+    //         })
+    //         .catch((e) => {
+    //             console.log(e);
+    //         });
+    // };
 
     return (
         <div>
