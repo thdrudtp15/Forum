@@ -30,6 +30,7 @@ export default async function RootLayout({
                     </Link>
                     <Link href="/list">List</Link>
                     <Link href="/write">Write</Link>
+                    <Link href="/signup">Sign up</Link>
                     <LoginAuthBtn 로그인정보={로그인정보} />
                 </div>
                 {children}

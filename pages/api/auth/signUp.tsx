@@ -15,8 +15,7 @@ async function signUp(data: { name: string; email: string; password: string }) {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
         let { name, email, password } = req.body;
-        let hashedPw = await bcrypt.hash(password, 10); // bcrypt로 암호화
-        req.body.password = hashedPw;
+        req.body.password = await bcrypt.hash(password, 10); // bcrypt로 암호화
 
         if (name === '' || email === '' || password === '') {
             return res.status(500).json('아이디 또는 비밀번호를 작성해주세요');
