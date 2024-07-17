@@ -12,7 +12,7 @@ import bcrypt from 'bcrypt';
 let adapter: Adapter = MongoDBAdapter(connectDB) as Adapter;
 // 뭔가 돌려막기 한 느낌이라 찝찝쓰..
 
-export const authOptions = {
+export const authOptions: any = {
     providers: [
         GithubProvider({
             clientId: 'Ov23limZKripVt2ucS8C',
@@ -31,7 +31,7 @@ export const authOptions = {
             //직접 DB에서 아이디,비번 비교하고
             //아이디,비번 맞으면 return 결과, 틀리면 return null 해야함
             //credentials에는 입력한 데이터가 들어옴
-            async authorize(credentials) {
+            async authorize(credentials): Promise<any | null> {
                 let db = (await connectDB).db('forum');
                 let user = await db.collection('user').findOne({ email: credentials?.email });
                 if (!user) {
@@ -55,16 +55,24 @@ export const authOptions = {
     callbacks: {
         //4. jwt 만들 때 실행되는 코드
         //user변수는 DB의 유저정보담겨있고 token.user에 뭐 저장하면 jwt에 들어갑니다.
-        jwt: async ({ token, user }) => {
+        jwt: async ({
+            token,
+            user,
+        }: {
+            token: { user: { name?: string; email?: string; role?: string } };
+            user: any;
+        }) => {
             if (user) {
                 token.user = {};
                 token.user.name = user.name;
                 token.user.email = user.email;
+                token.user.role = user.role;
             }
             return token;
         },
         //5. 유저 세션이 조회될 때 마다 실행되는 코드
-        session: async ({ session, token }) => {
+        //getServerSessoion에서 조회되는 데이터를 뜻함.
+        session: async ({ session, token }: { session: any; token: any }) => {
             session.user = token.user;
             return session;
         },

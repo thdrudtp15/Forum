@@ -1,7 +1,7 @@
 import { connectDB } from '@/util/database';
 import { ObjectId } from 'mongodb';
 
-type result = { id: string; title?: string; content: string };
+type result = { id: string; title?: string; content: string; author?: string };
 type props = { params: { id: string | number } };
 
 export default async function Detail(props: props) {
@@ -15,6 +15,7 @@ export default async function Detail(props: props) {
             <h4>상세페이지</h4>
             <h4>{result.title}</h4>
             <p>{result.content}</p>
+            <strong>글쓴이 : {result.author}</strong>
         </div>
     );
 }

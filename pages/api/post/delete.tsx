@@ -4,23 +4,36 @@ import { connectDB } from '@/util/database';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 
-const deleteRequest = async (_id: string, email: string) => {
+const deleteRequest = async (req: { _id: string; email: string; role: string }) => {
+    let { _id, email, role } = req;
+    console.log();
     const db = (await connectDB).db('forum');
-    const result = await db.collection('post').deleteOne({ _id: new ObjectId(_id), author: email });
-    return result.deletedCount; // 삭제 개수가 담긴다.
+    const result = await db.collection('post').findOne({ _id: new ObjectId(_id) });
+
+    if (result?.author === email || role === 'admin') {
+        const deleteRes = await db.collection('post').deleteOne({ _id: new ObjectId(_id) });
+        return deleteRes.deletedCount;
+    } else {
+        return 'not your post';
+    }
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    let session = await getServerSession(req, res, authOptions);
+    // 서버 통신 api의 경우 getServerSession 인자에 req, res를 넣어준다.
+    let session: { user: { email: string; role: string } } | null = await getServerSession(req, res, authOptions);
+
     if (session) {
         req.body.email = session?.user?.email;
+        req.body.role = session?.user?.role;
     } else {
         return res.status(500).json('Please Login');
     }
     if (req.method === 'POST') {
-        let result = await deleteRequest(req.body._id, req.body?.email);
+        let result: number | string = await deleteRequest(req.body);
         if (result === 0) {
             // 삭제 개수가 0인 경우 뭔가 이상하므로 에러 처리.
+            return res.status(500).json('Server Error');
+        } else if (result === 'not your post') {
             return res.status(500).json('not your post');
         }
         return res.status(200).json('삭제 성공');

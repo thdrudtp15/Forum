@@ -5,7 +5,7 @@ import DetailLink from './DetailLink';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-type result = { _id: string; title?: string; content: string }[];
+type result = { _id: string; title?: string; content: string; author: string }[];
 
 export default function ListItem({ result }: { result: result }) {
     let router = useRouter();
@@ -77,6 +77,7 @@ export default function ListItem({ result }: { result: result }) {
                     <Link prefetch={false} href={`/detail/${item._id.toString()}`}>
                         {item.title}
                     </Link>
+                    {item.author === 'admin' && <strong>⭐</strong>}
                     <p>{item.content}</p>
                     {/* <Link href={`/modify/${item._id}`}>수정하기</Link> */}
                     <DetailLink _id={item._id.toString()} />

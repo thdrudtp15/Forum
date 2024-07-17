@@ -19,7 +19,7 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    let 로그인정보 = await getServerSession(authOptions);
+    let 로그인정보: unknown = await getServerSession(authOptions);
 
     return (
         <html lang="en">

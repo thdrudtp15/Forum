@@ -11,7 +11,7 @@ async function writePost(data: { title: string; content: string }) {
 
 export default async function Write(req: NextApiRequest, res: NextApiResponse) {
     // 1. 로그인 정보 가져오기
-    let session = await getServerSession(req, res, authOptions);
+    let session: { user: { email: string } } | null = await getServerSession(req, res, authOptions);
     console.log(session?.user?.email);
     // 2. 로그인을 했다면 body에 데이터 추가
     if (session) {

@@ -5,7 +5,7 @@ import ListItem from './ListItem';
 
 export const dynamic = 'force-dynamic';
 
-type result = { _id: string; title?: string; content: string }[];
+type result = { _id: string; title?: string; content: string; author: string }[];
 
 export default async function List() {
     const client: any = await connectDB;
