@@ -1,4 +1,4 @@
-import { connectDB } from '../../forum/util/database';
+import { connectDB } from '@/util/database';
 
 type result = { id: string; title?: string; content: string }[];
 
@@ -9,11 +9,12 @@ export default async function Home() {
 
     return (
         <div>
-            {result.map((item, index) => (
+            {/* {result.map((item, index) => (
                 <p key={index}>
                     {item.title} {item.content}
                 </p>
-            ))}
+            ))} */}
+            MAIN PAGE
         </div>
     );
 }

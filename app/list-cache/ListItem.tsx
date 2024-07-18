@@ -5,7 +5,7 @@ import DetailLink from './DetailLink';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-type result = { _id: string; title?: string; content: string; author: string }[];
+type result = { _id: string; title?: string; content: string }[];
 
 export default function ListItem({ result }: { result: result }) {
     let router = useRouter();
@@ -13,26 +13,18 @@ export default function ListItem({ result }: { result: result }) {
     /**
      * post 요청에 body에 삭제할 내용을 담아 삭제하는 방법.
      */
-    const deletePost = (_id: string, index: number) => {
-        axios
-            .post(`/api/post/delete`, { _id: _id })
-            .then((res) => {
-                console.log(res);
-                let list = document.querySelectorAll('.list-item');
-                if (list instanceof NodeList) {
-                    list[index].classList.add('opacity0');
-                }
-            })
-            .catch((e) => {
-                console.log(e);
-                let error: string = e?.response?.data;
-                if (error === 'Please Login') {
-                    alert('로그인 해주세요.');
-                } else {
-                    alert('본인 작성 게시글 외에는 삭제할 수 없습니다.');
-                }
-            });
-    };
+    // const deletePost = (_id: string, index: number) => {
+    //     axios
+    //         .post(`/api/post/delete`, { _id: _id })
+    //         .then((res) => {
+    //             console.log(res);
+    //             let list = document.querySelectorAll('.list-item');
+    //             if (list instanceof NodeList) {
+    //                 list[index].classList.add('opacity0');
+    //             }
+    //         })
+    //         .catch((e) => {});
+    // };
 
     /**
      * URL 파라미터로 삭제하는 방법.
@@ -54,21 +46,22 @@ export default function ListItem({ result }: { result: result }) {
     /**
      * 쿼리스트링으로 삭제하는 방법
      */
-    // const deletePost = async (_id: string, index: number) => {
-    //     fetch(`/api/test?id=${_id}`, { method: 'GET' })
-    //         .then((res) => {
-    //             let list = document.querySelectorAll('.list-item');
-    //             if (list instanceof NodeList) {
-    //                 list[index].classList.add('opacity0');
-    //             }
-    //             setTimeout(() => {
-    //                 router.refresh();
-    //             }, 1000);
-    //         })
-    //         .catch((e) => {
-    //             console.log(e);
-    //         });
-    // };
+    const deletePost = async (_id: string, index: number) => {
+        axios
+            .get(`/api/test?id=${_id}`)
+            .then((res) => {
+                let list = document.querySelectorAll('.list-item');
+                if (list instanceof NodeList) {
+                    list[index].classList.add('opacity0');
+                }
+                setTimeout(()=>{
+                    router.refresh();
+                },1000 )
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    };
 
     return (
         <div>
@@ -77,7 +70,6 @@ export default function ListItem({ result }: { result: result }) {
                     <Link prefetch={false} href={`/detail/${item._id.toString()}`}>
                         {item.title}
                     </Link>
-                    {item.author === 'admin' && <strong>⭐</strong>}
                     <p>{item.content}</p>
                     {/* <Link href={`/modify/${item._id}`}>수정하기</Link> */}
                     <DetailLink _id={item._id.toString()} />
