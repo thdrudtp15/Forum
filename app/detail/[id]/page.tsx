@@ -3,6 +3,7 @@ import { ObjectId } from 'mongodb';
 import Comment from './Comment';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import Likely from './Likely';
 
 type result = { _id: string; title?: string; content: string; author?: string };
 type user = { user: { name: string; email: string; role: string } } | null;
@@ -21,7 +22,7 @@ export default async function Detail(props: props) {
                 <h4>{result.title}</h4>
                 <p>{result.content}</p>
                 <strong>글쓴이 : {result.author}</strong>
-                <p>❤️</p>
+                <Likely id={props.params.id} />
             </div>
             <hr />
             <Comment id={result?._id?.toString()} 로그인정보={로그인정보} />
