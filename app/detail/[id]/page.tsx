@@ -13,7 +13,6 @@ export default async function Detail(props: props) {
     const db = client.db('forum');
     const result: result = await db.collection('post').findOne({ _id: new ObjectId(props.params.id) });
     const 로그인정보: user = await getServerSession(authOptions);
-    console.log('아디', result._id.toString());
 
     return (
         <div style={{ padding: 20 }}>
