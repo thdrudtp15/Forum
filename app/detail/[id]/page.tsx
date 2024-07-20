@@ -16,10 +16,14 @@ export default async function Detail(props: props) {
 
     return (
         <div style={{ padding: 20 }}>
-            <h4>상세페이지</h4>
-            <h4>{result.title}</h4>
-            <p>{result.content}</p>
-            <strong>글쓴이 : {result.author}</strong>
+            <div style={{ marginBottom: 20 }} className="mb-2">
+                <h4>상세페이지</h4>
+                <h4>{result.title}</h4>
+                <p>{result.content}</p>
+                <strong>글쓴이 : {result.author}</strong>
+                <p>❤️</p>
+            </div>
+            <hr />
             <Comment id={result?._id?.toString()} 로그인정보={로그인정보} />
         </div>
     );

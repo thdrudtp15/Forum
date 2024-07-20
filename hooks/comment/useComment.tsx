@@ -10,7 +10,7 @@ export default function useCommentList(comment: string | undefined, id: string) 
      * 댓글 가져오기
      */
     const getCommentList = async () => {
-        console.log('왜이래');
+        setLoading(true);
         axios
             .get(`http://localhost:3000/api/get/comment?id=${id}`)
             .then((res) => {
@@ -19,6 +19,9 @@ export default function useCommentList(comment: string | undefined, id: string) 
             })
             .catch((e) => {
                 console.log(e);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
     /**
@@ -34,7 +37,6 @@ export default function useCommentList(comment: string | undefined, id: string) 
                 return res.json();
             })
             .then((data) => {
-                console.log(data);
                 getCommentList();
             })
             .catch((e) => {

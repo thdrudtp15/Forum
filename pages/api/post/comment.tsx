@@ -11,7 +11,10 @@ type session = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     let session: session = await getServerSession(req, res, authOptions);
-
+    // 서버에서 유저 정보를 가져오는 것도 좋음 보안적으로
+    if (!session) {
+        return res.status(403).json('로그인 하세요');
+    }
     if (req.method === 'POST' && session) {
         let data = JSON.parse(req.body);
         data.author = session?.user?.email;
