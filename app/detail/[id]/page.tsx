@@ -4,6 +4,7 @@ import Comment from './Comment';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import Likely from './Likely';
+import { notFound } from 'next/navigation';
 
 type result = { _id: string; title?: string; content: string; author?: string };
 type user = { user: { name: string; email: string; role: string } } | null;
@@ -14,6 +15,10 @@ export default async function Detail(props: props) {
     const db = client.db('forum');
     const result: result = await db.collection('post').findOne({ _id: new ObjectId(props.params.id) });
     const 로그인정보: user = await getServerSession(authOptions);
+
+    if (result === null) {
+        return notFound();
+    }
 
     return (
         <div style={{ padding: 20 }}>
