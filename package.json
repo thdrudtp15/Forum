@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^3.4.1",
+    "aws-sdk": "^2.1664.0",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "mongodb": "^6.8.0",

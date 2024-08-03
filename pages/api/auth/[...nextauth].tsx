@@ -14,8 +14,8 @@ let adapter: Adapter = MongoDBAdapter(connectDB) as Adapter;
 export const authOptions: any = {
     providers: [
         GithubProvider({
-            clientId: 'Ov23limZKripVt2ucS8C',
-            clientSecret: 'd83eab6382da070872f56684c17286c974a205df',
+            clientId: process.env.NEXT_GIT_CLIENT_ID as string,
+            clientSecret: process.env.NEXT_GIT_CLIENT_SECRET as string,
         }),
 
         CredentialsProvider({
@@ -30,7 +30,7 @@ export const authOptions: any = {
             //직접 DB에서 아이디,비번 비교하고
             //아이디,비번 맞으면 return 결과, 틀리면 return null 해야함
             //credentials에는 입력한 데이터가 들어옴
-            async authorize(credentials): Promise<any | null> {
+            async authorize(credentials): Promise<any> {
                 let db = (await connectDB).db('forum');
                 let user = await db.collection('user').findOne({ email: credentials?.email });
                 if (!user) {

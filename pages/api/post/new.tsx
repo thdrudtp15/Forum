@@ -3,7 +3,7 @@ import { connectDB } from '../../../util/database';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 
-async function writePost(data: { title: string; content: string }) {
+async function writePost(data: { title: string; content: string; image: string }) {
     const db = (await connectDB).db('forum');
     const result = await db.collection('post').insertOne(data);
     return result;
@@ -21,7 +21,7 @@ export default async function Write(req: NextApiRequest, res: NextApiResponse) {
     }
     // 3. 글 작성
     if (req.method === 'POST') {
-        let { title, content } = req.body;
+        let { title, content, image } = req.body;
         if (title === '' || content === '') {
             return res.status(500).json('아무것도 작성을 안함.');
         }

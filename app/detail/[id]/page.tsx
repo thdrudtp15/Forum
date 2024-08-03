@@ -6,7 +6,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import Likely from './Likely';
 import { notFound } from 'next/navigation';
 
-type result = { _id: string; title?: string; content: string; author?: string };
+type result = { _id: string; title?: string; content: string; author?: string; image: string };
 type user = { user: { name: string; email: string; role: string } } | null;
 type props = { params: { id: string | number } };
 
@@ -26,6 +26,9 @@ export default async function Detail(props: props) {
                 <h4>상세페이지</h4>
                 <h4>{result.title}</h4>
                 <p>{result.content}</p>
+                <p>
+                    <img src={result.image} />
+                </p>
                 <strong>글쓴이 : {result.author}</strong>
                 <Likely id={props.params.id} />
             </div>

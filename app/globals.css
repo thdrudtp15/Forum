@@ -68,3 +68,9 @@ a {
     animation-duration: 1s;
     animation-fill-mode: forwards;
 }
+
+img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+}
