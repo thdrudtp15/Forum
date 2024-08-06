@@ -1,9 +1,5 @@
 'use client';
 
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { getServerSession } from 'next-auth';
-import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
 import { useState } from 'react';
 
 export default function PresignedImage() {
@@ -23,7 +19,6 @@ export default function PresignedImage() {
 
     const mountImage = async (e: any) => {
         let file = e.target.files[0];
-
         // 파일 명이 한글이거나 이상한 문자일때
         // 인코딩을 해준다.
         let filename = encodeURIComponent(file.name);
@@ -31,20 +26,24 @@ export default function PresignedImage() {
             let res: { fields: any; url: string } | any = await fetch(`/api/post/image?file=${filename}`);
             res = await res.json();
             const formData = new FormData();
+            let obj: any = {};
             Object.entries({ ...res.fields, file }).forEach(([key, value]) => {
+                obj[key] = value;
                 formData.append(key, value as string);
             });
-            console.log(formData, '폼데이터');
-            let 업로드결과 = await fetch(res.url, {
-                method: 'POST',
-                body: formData,
-            });
-            if (업로드결과.ok) {
-                // 파일명을 붙혀주어야 함!
-                setSrc(업로드결과.url + '/' + filename);
-            } else {
-                throw new Error('이미지 업로드 중 에러 발생');
-            }
+            console.log(obj);
+            console.log({ ...res.fields });
+            console.log(file);
+            // let 업로드결과 = await fetch(res.url, {
+            //     method: 'POST',
+            //     body: formData,
+            // });
+            // if (업로드결과.ok) {
+            //     // 파일명을 붙혀주어야 함!
+            //     setSrc(업로드결과.url + '/' + filename);
+            // } else {
+            //     throw new Error('이미지 업로드 중 에러 발생');
+            // }
         } catch (e) {
             console.log(e);
         }

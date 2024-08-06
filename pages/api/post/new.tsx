@@ -10,6 +10,7 @@ async function writePost(data: { title: string; content: string; image: string }
 }
 
 export default async function Write(req: NextApiRequest, res: NextApiResponse) {
+    console.log(req.body);
     // 1. 로그인 정보 가져오기
     let session: { user: { email: string } } | null = await getServerSession(req, res, authOptions);
     console.log(session?.user?.email);
