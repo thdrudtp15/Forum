@@ -15,6 +15,7 @@ export default function CreateObjectURL() {
 
     const writeContent = async () => {
         let file = src;
+        let imageUrl;
         if (file) {
             console.log('뭐여 싯팔진짜');
             try {
@@ -32,18 +33,18 @@ export default function CreateObjectURL() {
                     method: 'POST',
                     body: formData,
                 });
-                if (!업로드결과.ok) throw new Error('이미지 업로드 중 에러 발생!');
+                if (업로드결과.ok) {
+                    imageUrl = 업로드결과.url + `/` + filename;
+                } else {
+                    throw new Error('이미지 업로드 중 에러 발생!');
+                }
             } catch (e) {
                 alert(e);
             }
         }
         // aws s3에 업로드 한 이후에 진행함.
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('content', content);
-        console.log(formData);
         try {
-            let res = await axios.post('/api/post/new', { title, content, src });
+            let res = await axios.post('/api/post/new', { title, content, image: imageUrl });
             if (res.status === 200) {
                 router.replace('/list');
             }
